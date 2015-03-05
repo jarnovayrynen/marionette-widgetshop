@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Widget Shop</title>
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/application.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <!-- deps -->
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="bower_components/underscore/underscore.js"></script>
+    <script type="text/javascript" src="bower_components/backbone/backbone.js"></script>
+    <script type="text/javascript" src="bower_components/marionette/lib/backbone.marionette.js"></script>
+    
+    <!-- application code -->
+    <script type="text/javascript" src="javascripts/application.js"></script>
+    <script type="text/javascript" src="javascripts/data.js"></script>
+    <script type="text/javascript" src="javascripts/views.js"></script>
+    <script type="text/javascript" src="javascripts/router.js"></script>
+
+    <!-- templates -->
+    <script id="main-layout-template" type="text/template">
+        <header id="header" class="row"></header>
+        <main id="main" class="row"></main>
+        <section id="details" class="row"></section>
+    </script>
+
+    <script id="about-template" type="text/template">
+        <div id="about">This is a Marionette Example.</div>
+    </script>
+
+    <script id="header-template" type="text/template">
+        <div class="navbar box-shadow-primary">
+        <h1 id="header-title">Welcome to Widget Shop</h1>
+        </div>
+    </script>
+
+    <script id="products-template" type="text/template">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Average rating</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="product-list"></tbody>
+    </script>
+
+    <script id="product-template" type="text/template">
+        <td><-%= name %></td>
+        <td><-%= getPrice() %></td>
+        <td><-%= getAvgRating() %></td>
+        <td><button type="button" class="btn btn-primary show-details-btn">Show Me More!</button></td>
+    </script>
+
+    <script id="review-template" type="text/template">
+        <div><b>Name</b> <-%= name %></div>
+        <div><b>Email</b> <-%= email %></div>
+        <div><b>Stars</b> <-%= getStars() %></div>
+        <div><b>Review</b> <-%= review %></div>
+        <hr class="box-shadow-primary">
+    </script>
+
+    <script id="no-reviews-template" type="text/template">
+        <div>No reviews yet. Would you enter the first one?</div>
+    </script>
+
+    <script id="nav-template" type="text/template">
+        <ul class="nav nav-pills">
+          <li role="presentation" class="active"><a href="#">Home</a></li>
+          <li role="presentation"><a href="#">Profile</a></li>
+          <li role="presentation"><a href="#">Messages</a></li>
+        </ul>
+    </script>
+
+    <script id="details-template" type="text/template">
+        <div class="col-sm-6">
+            <h3>Details</h3>
+            <-%= getDetails() %></div>
+        </div>
+        <div class="col-sm-6">
+            <h3>Gallery</h3>
+            <-%= getGallery() %>
+        </div>
+        <div class="col-sm-12">
+            <h3>Reviews</h3>
+            <div class="reviews"><-%= getReviews() %></div>
+        </div>
+    </script>
+
+  </body>
+</html>

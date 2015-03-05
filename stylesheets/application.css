@@ -1,0 +1,31 @@
+#app {
+	color: #333333;
+	font-family: Verdana, Geneva, sans-serif;
+}
+.border-style {
+	border: thin ridge #0156CD;
+}
+.navbar {
+	color: #333333;
+}
+.box-shadow-primary {
+	box-shadow: 3px 3px 3px #0156CD;
+}
+.details,
+.gallery,
+.reviews {
+	margin-bottom: 20px;
+	padding: 10px;
+}
+.green {
+	color: green;
+}
+#header-title {
+	text-align: center;
+}
+.make-it-big {
+	font-size: 3em;
+}
+.red {
+	color: red;
+}
