@@ -28,7 +28,13 @@ App.Product = Marionette.ItemView.extend({
 			}
 		}
 	},
-	tagName: "tr"
+	tagName: "tr",
+	events: {
+		'click .show-details-btn': 'onShowDetailsBtn'
+	},
+	onShowDetailsBtn: function () {
+		this.triggerMethod('show:details');
+	}
 });
 
 App.Products = Marionette.CompositeView.extend({
@@ -36,8 +42,14 @@ App.Products = Marionette.CompositeView.extend({
 	tagName: "table",
 	className: "table",
 	childView: App.Product,
-	childViewContainer: '#product-list'
-});
+	childViewContainer: '#product-list',
+	childEvents: {
+		'show:details': function (child) {
+			// event bubbled up to the parent
+			this.triggerMethod('show:details', child);
+		}
+	}
+	});
 
 App.Header = Marionette.ItemView.extend({
 	template: "#header-template"
@@ -118,21 +130,17 @@ App.MainLayout = Marionette.LayoutView.extend({
 		main: "#main",
 		details: "#details"
 	},
-	initialize: function() {
+	initialize: function(o) {
 		this.products = new Backbone.Collection(App.data);
+		this.productsView = new App.Products({collection: this.products});
+		this.listenTo(this.productsView, 'show:details', this.onShowDetails);
 	},
 	onRender: function() {
 		this.header.show(new App.Header());
-		this.main.show(new App.Products({collection: this.products}));
+		this.main.show(this.productsView);
 	},
-	events: {
-		'click .show-details-btn': 'onShowDetails'
-	},
-	onShowDetails: function(e) {
-		var index = $(e.target).parent().parent().index();
-		var model = this.products.at(index);
-		this.details.show(new App.Details({model: model}))
+	onShowDetails: function(child) {
+		this.details.show(new App.Details({model: child.model}))
 	}
-
 });
 
