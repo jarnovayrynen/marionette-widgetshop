@@ -21,12 +21,15 @@ App.Product = Marionette.ItemView.extend({
 					ratingCount++;
 				});
 				var avgRating = ratingSum/ratingCount;
-				for (i=0; i < avgRating; i++) {
+				for (var i = 0; i < avgRating; i++) {
 					html += '<span aria-hidden="true" class="glyphicon glyphicon-star"></span>';
 				}
 				return html;
 			}
 		}
+	},
+	initialize: function(opts) {
+		if (opts.parent) this.parent = opts.parent;
 	},
 	tagName: "tr",
 	events: {
@@ -34,6 +37,7 @@ App.Product = Marionette.ItemView.extend({
 	},
 	onShowDetailsBtn: function () {
 		this.triggerMethod('show:details');
+		if (this.parent) this.parent.trigger("clickEvent", this);
 	}
 });
 
@@ -128,16 +132,21 @@ App.MainLayout = Marionette.LayoutView.extend({
 	regions: {
 		header: "#header",
 		main: "#main",
+		mainAlternate: "#main-alternate",
 		details: "#details"
 	},
-	initialize: function(o) {
+	initialize: function() {
 		this.products = new Backbone.Collection(App.data);
 		this.productsView = new App.Products({collection: this.products});
 		this.listenTo(this.productsView, 'show:details', this.onShowDetails);
+
+		this.alternateProductsView = new App.AlternateProducts({collection: this.products, parent: this});
+		this.on('clickEvent', this.onShowDetails);
 	},
 	onRender: function() {
 		this.header.show(new App.Header());
 		this.main.show(this.productsView);
+		//this.mainAlternate.show(this.alternateProductsView);
 	},
 	onShowDetails: function(child) {
 		this.details.show(new App.Details({model: child.model}))
